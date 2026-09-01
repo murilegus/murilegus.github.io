@@ -17,12 +17,18 @@ var STEAM_CLIPS = [
 ];
 ```
 
-Chỉ nhận `.mp4` và URL tuyệt đối. Ba entry hiện tại là placeholder, phải thay bằng
-link thật thì trang mới chạy.
+Chỉ nhận `.mp4` và URL tuyệt đối.
 
 Nên dùng **animated profile background** của Steam Points Shop: tỉ lệ ngang, độ phân
 giải đủ lớn để phủ full màn hình. Tránh animated avatar (184×184) và avatar frame —
 kéo lên full viewport sẽ vỡ.
+
+Ba clip đang dùng là 1920×1080 (một cái 1920×850), h264, 24fps, 7–8 giây, dưới 1 MB
+mỗi file. Lấy link bằng cách mở một background trên Points Shop rồi copy URL của
+request `.mp4` trong DevTools → Network.
+
+Trang hotlink thẳng CDN của Steam, không tự host. Đổi lại là không tốn dung lượng
+repo và ăn được edge cache của Valve, nhưng Steam đổi đường dẫn thì trang gãy.
 
 ## Cách chọn video
 
