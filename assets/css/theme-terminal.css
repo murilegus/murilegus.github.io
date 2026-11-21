@@ -117,6 +117,15 @@
   [data-theme="terminal"] .rows > li,
   [data-theme="terminal"] .rows > li:last-child { grid-template-columns: minmax(0, 1fr); }
 }
+/* skills.yml really is YAML: each row reads `key: value`, with the key in the
+   accent colour. When the row stacks on a narrow screen the value is indented
+   under its key, which is still a valid YAML scalar. */
+[data-theme="terminal"] section[aria-labelledby="h-skill"] .when { color: var(--accent); }
+[data-theme="terminal"] section[aria-labelledby="h-skill"] .when::after { content: ":"; color: var(--fg); }
+@media (max-width: 560px) {
+  [data-theme="terminal"] section[aria-labelledby="h-skill"] .what { padding-left: 2ch; }
+}
+
 [data-theme="terminal"] footer { font-size: inherit; }
 [data-theme="terminal"] footer::after {
   content: "$";

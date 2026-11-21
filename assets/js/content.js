@@ -10,7 +10,7 @@ var CONTACT = {
 
 var CONTENT = {
   name: { en: 'Trung Pham Thanh', vi: 'Phạm Thành Trung' },
-  shortName: 'Trung Phạm',   // shown in the top bar; the full name goes in the tab title
+  shortName: { en: 'Trung Pham', vi: 'Trung Phạm' },   // shown in the top bar; the full name goes in the tab title
   role: 'AI/Data Engineer',
   location: { en: 'Ho Chi Minh City, Vietnam', vi: 'TP. Hồ Chí Minh, Việt Nam' },
   headline: {
@@ -54,7 +54,7 @@ var CONTENT = {
     {
       when: { en: 'Jun 2022 – Feb 2023', vi: '06/2022 – 02/2023' },
       role: 'Data Engineer',
-      org: 'eduplaX',
+      org: 'eduplaX (WeAI., JSC)',
       points: [
         { en: 'Built ETL workflows integrating digitized educational content (questions, exams, and lectures with LaTeX formatting) into MongoDB, supporting a catalog of 10,000+ items.',
           vi: 'Xây luồng ETL đưa nội dung giáo dục đã số hoá (câu hỏi, đề thi, bài giảng có định dạng LaTeX) vào MongoDB, phục vụ kho nội dung 10.000+ mục.' },

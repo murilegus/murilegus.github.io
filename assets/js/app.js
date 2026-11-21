@@ -90,7 +90,7 @@
     document.title = t(c.name) + ' — ' + c.role;
 
     var top = el('header', { 'class': 'top' },
-      el('div', { 'class': 'id' }, c.shortName + ' — ' + c.role),
+      el('div', { 'class': 'id' }, t(c.shortName) + ' — ' + c.role),
       el('div', { 'class': 'controls' },
         group(t(UI.language), 'lang', root.lang, [['en', 'EN'], ['vi', 'VI']]),
         group(t(UI.theme), 'theme', root.dataset.theme, THEMES.map(function (n) { return [n, THEME_LABELS[n] || n]; })),
