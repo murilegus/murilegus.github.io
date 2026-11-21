@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- "T" followed by a terminal cursor, in the site's Dracula colours. -->
+  <rect width="32" height="32" rx="7" fill="#282a36"/>
+  <path d="M6.5 9h13v3.4h-4.7V23h-3.6V12.4H6.5z" fill="#f8f8f2"/>
+  <rect x="22" y="9" width="3" height="14" fill="#50fa7b"/>
+</svg>
