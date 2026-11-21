@@ -61,7 +61,3 @@ python3 -m http.server 4173
 ```
 
 Rồi mở <http://localhost:4173>.
-
-## Lưu ý
-
-`CNAME` giữ custom domain `trungit.dev` (trỏ qua Cloudflare). Đừng xoá.
