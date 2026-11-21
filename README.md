@@ -1,54 +1,66 @@
 # trungit.dev
 
-Một trang tĩnh duy nhất: full viewport, phát một video loop vô hạn, chọn ngẫu nhiên
-lúc load. Muốn xem cái khác thì refresh.
+Trang portfolio cá nhân. HTML, CSS và JavaScript thuần — không build step, không
+dependency. Push lên `main` là deploy.
 
-Toàn bộ nằm trong [`index.html`](index.html) — không build step, không dependency,
-không asset đi kèm. Push lên `main` là deploy.
+Người xem tự chọn ba thứ ở đầu trang, lựa chọn được nhớ trong `localStorage`:
 
-## Thêm video
+| Tuỳ chọn | Giá trị | Mặc định |
+|---|---|---|
+| Ngôn ngữ | `EN`, `VI` | theo ngôn ngữ trình duyệt |
+| Giao diện (theme) | `Minimal`, `Terminal` | `Minimal` |
+| Chế độ màu | Tự động, Sáng, Tối | Tự động (theo thiết bị) |
 
-Mở `index.html`, tìm `var STEAM_CLIPS` gần đầu thẻ `<script>` và thêm một dòng:
+## Cấu trúc
 
-```js
-var STEAM_CLIPS = [
-  'https://shared.fastly.steamstatic.com/community_assets/images/items/<id>/<hash>.mp4',
-  // <-- add new links here
-];
+| File | Vai trò |
+|---|---|
+| [`index.html`](index.html) | Khung trang, nạp các file bên dưới |
+| [`assets/js/content.js`](assets/js/content.js) | **Toàn bộ nội dung** (song ngữ) |
+| [`assets/js/app.js`](assets/js/app.js) | Dựng trang từ nội dung, xử lý các nút chuyển |
+| [`assets/js/boot.js`](assets/js/boot.js) | Chạy trước khi vẽ: áp ngôn ngữ, theme, chế độ màu đã lưu; chứa danh sách `THEMES` |
+| [`assets/css/base.css`](assets/css/base.css) | Token màu, bố cục, theme Minimal, màn hình cảm ứng, in ấn |
+| [`assets/css/theme-terminal.css`](assets/css/theme-terminal.css) | Theme Terminal |
+
+## Sửa nội dung
+
+Sửa object `CONTENT` trong `assets/js/content.js`. Mỗi giá trị là một chuỗi (dùng
+chung cho hai ngôn ngữ) hoặc `{ en: '…', vi: '…' }`. Thêm một công việc, dự án hay
+nhóm kỹ năng là thêm một phần tử vào mảng tương ứng.
+
+Mọi theme đều render từ cùng object này, nên sửa một chỗ là đổi ở tất cả theme.
+
+## Thêm theme
+
+Theme chỉ là CSS phủ lên cùng một markup:
+
+1. Tạo `assets/css/theme-<tên>.css` và thêm thẻ `<link>` tương ứng vào `index.html`.
+2. Trong file đó, viết `:root[data-theme="<tên>"] { … }` định nghĩa lại các token màu,
+   và `:root[data-theme="<tên>"][data-mode="dark"] { … }` cho bản tối. Nếu cần đổi bố
+   cục, thêm các rule bắt đầu bằng `[data-theme="<tên>"]`.
+3. Thêm tên vào mảng `THEMES` trong `assets/js/boot.js` và nhãn hiển thị vào
+   `THEME_LABELS` trong `assets/js/app.js`.
+
+Theme `terminal` là ví dụ: mỗi tiêu đề mục có thuộc tính `data-cmd` (ví dụ
+`cat experience.md`) và CSS hiển thị nó thành dòng lệnh, tô màu riêng cho dấu nhắc,
+tên lệnh, file và thư mục.
+
+## Chế độ màu
+
+`<html>` mang hai thuộc tính: `data-pref` là lựa chọn của người xem
+(`auto`/`light`/`dark`), `data-mode` là chế độ đang hiển thị (`light`/`dark`). Khi
+`data-pref="auto"`, trang theo `prefers-color-scheme` và tự đổi khi thiết bị đổi.
+Chế độ tối dùng bảng màu Dracula ở mọi theme.
+
+## Xem thử ở máy
+
+Trang nạp file CSS/JS ngoài nên cần chạy qua một máy chủ tĩnh:
+
+```bash
+python3 -m http.server 4173
 ```
 
-Chỉ nhận `.mp4` và URL tuyệt đối.
-
-Nên dùng **animated profile background** của Steam Points Shop: tỉ lệ ngang, độ phân
-giải đủ lớn để phủ full màn hình. Tránh animated avatar (184×184) và avatar frame —
-kéo lên full viewport sẽ vỡ.
-
-Ba clip đang dùng là 1920×1080 (một cái 1920×850), h264, 24fps, 7–8 giây, dưới 1 MB
-mỗi file. Lấy link bằng cách mở một background trên Points Shop rồi copy URL của
-request `.mp4` trong DevTools → Network.
-
-Trang hotlink thẳng CDN của Steam, không tự host. Đổi lại là không tốn dung lượng
-repo và ăn được edge cache của Valve, nhưng Steam đổi đường dẫn thì trang gãy.
-
-## Cách chọn video
-
-Shuffle bag lưu ở `localStorage` key `mediabag.v1`, nên **không video nào lặp lại cho
-tới khi đã chiếu hết danh sách**, tính xuyên suốt qua nhiều lần refresh. Hết bag thì
-xáo lại, và lần rút đầu tiên sau khi xáo được đảm bảo khác video vừa xem.
-
-Danh sách đổi (thêm/bớt/sửa link) → fingerprint lệch → bag tự reset.
-Trình duyệt chặn storage (tab ẩn danh, Safari private) → tự rơi về random thuần,
-trang vẫn chạy bình thường.
-
-## Điều khiển
-
-| Phím | Kết quả |
-|---|---|
-| `R` | Reload, tức là bốc video khác |
-| `F` | Toggle fullscreen |
-| `C` | Toggle `object-fit` giữa `cover` và `contain` |
-
-Không có nút bấm nào trên trang. Trên mobile thì chỉ còn cách kéo xuống để refresh.
+Rồi mở <http://localhost:4173>.
 
 ## Lưu ý
 

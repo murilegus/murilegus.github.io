@@ -1,0 +1,132 @@
+/* ── Theme: terminal ───────────────────────────────────────────────────
+   Same markup, restyled as a terminal session. Each section heading turns
+   into the command in its data-cmd attribute; the heading text itself stays
+   in the DOM for screen readers. */
+:root[data-theme="terminal"] {
+  --page: #e6e8ec;
+  --bg: #fcfcfb;
+  --bar: #eceef1;
+  --fg: #24292f;
+  --muted: #6a737d;
+  --rule: #d0d5dc;
+  --accent: #0550ae;
+  --prompt: #8250df;
+  --cmd: #1a7f37;
+  --arg: #953800;       /* file argument */
+  --dir: #0550ae;       /* directory argument */
+}
+:root[data-theme="terminal"][data-mode="dark"] {
+  --page: #191a21;
+  --bg: #282a36;        /* Background */
+  --bar: #21222c;
+  --fg: #f8f8f2;        /* Foreground */
+  --muted: #b6b9cc;
+  --comment: #6272a4;   /* Comment */
+  --rule: #44475a;      /* Current Line */
+  --accent: #8be9fd;    /* Cyan */
+  --prompt: #ff79c6;    /* Pink */
+  --cmd: #50fa7b;       /* Green */
+  --arg: #f1fa8c;       /* Yellow: file argument */
+  --dir: #bd93f9;       /* Purple: directory argument */
+}
+[data-theme="terminal"] body {
+  font: 14.5px/1.65 var(--mono);
+  padding-left: max(12px, env(safe-area-inset-left));
+  padding-right: max(12px, env(safe-area-inset-right));
+}
+[data-theme="terminal"] .page {
+  --pad: clamp(14px, 4vw, 30px);
+  max-width: 56rem;
+  padding: 0 var(--pad) 26px;
+  background: var(--bg);
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  overflow: hidden;
+}
+[data-theme="terminal"] .page::before {
+  content: "trung@trungit.dev: ~";
+  display: block;
+  margin: 0 calc(-1 * var(--pad)) 18px;
+  padding: 8px var(--pad);
+  background: var(--bar);
+  border-bottom: 1px solid var(--rule);
+  color: var(--muted);
+  font-size: 12.5px;
+}
+[data-theme="terminal"] a { color: var(--accent); }
+
+[data-theme="terminal"] .top { font-size: inherit; color: var(--fg); }
+/* Every command line is coloured like a highlighted shell line: "$" in
+   --prompt, the command name in --cmd, its file/directory argument in --arg.
+   One pseudo-element can only carry one colour, so the three are painted
+   with a gradient clipped to the glyphs. The font is monospace, so the
+   command name spans exactly --n characters starting 2ch in. A heading whose
+   command ends in "/" gets class "dir" and paints its argument in --dir. */
+[data-theme="terminal"] .id::before,
+[data-theme="terminal"] .intro::before,
+[data-theme="terminal"] footer::before,
+[data-theme="terminal"] h2::before {
+  display: block;
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--fg);
+}
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  [data-theme="terminal"] .id::before,
+  [data-theme="terminal"] .intro::before,
+  [data-theme="terminal"] footer::before,
+  [data-theme="terminal"] h2::before {
+    background: linear-gradient(90deg,
+      var(--prompt) 2ch,
+      var(--cmd) 2ch, var(--cmd) calc((2 + var(--n)) * 1ch),
+      var(--arg) 0);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
+[data-theme="terminal"] .id::before { content: "$ whoami"; --n: 6; }
+[data-theme="terminal"] .intro::before { content: "$ cat about.md"; --n: 3; }
+[data-theme="terminal"] footer::before { content: "$ cat contact.txt"; --n: 3; flex-basis: 100%; }
+[data-theme="terminal"] h2::before { content: "$ " attr(data-cmd); }
+[data-theme="terminal"] h2.dir::before { --arg: var(--dir); }
+
+[data-theme="terminal"] .controls { color: var(--muted); gap: 2px 14px; }
+[data-theme="terminal"] .group { gap: 6px; }
+[data-theme="terminal"] .group button::before { content: "["; }
+[data-theme="terminal"] .group button::after { content: "]"; }
+[data-theme="terminal"] .group button[aria-pressed="true"] { color: var(--cmd); text-decoration: none; font-weight: 700; }
+
+[data-theme="terminal"] .intro { padding: 22px 0 26px; }
+[data-theme="terminal"] h1 { margin: 0 0 .6em; font-size: 1.15rem; line-height: 1.5; letter-spacing: 0; }
+[data-theme="terminal"] h1::before { content: "# "; color: var(--comment); }
+[data-theme="terminal"] .lead { max-width: none; margin-bottom: .8em; font-size: inherit; color: var(--fg); }
+[data-theme="terminal"] .cta { font-weight: 400; }
+
+[data-theme="terminal"] section { padding-bottom: 26px; }
+[data-theme="terminal"] h2 { margin: 0 0 4px; font-size: 0; letter-spacing: 0; text-transform: none; }
+[data-theme="terminal"] .rows > li,
+[data-theme="terminal"] .rows > li:last-child { border: 0; padding: 6px 0; grid-template-columns: 11.5rem minmax(0, 1fr); }
+[data-theme="terminal"] .when { font-size: inherit; padding-top: 0; }
+[data-theme="terminal"] .what strong { font-weight: 700; }
+[data-theme="terminal"] .what p,
+[data-theme="terminal"] .what ul { font-size: inherit; margin-top: 2px; }
+[data-theme="terminal"] .what ul { list-style: "- "; padding-left: 2ch; }
+[data-theme="terminal"] .what li + li { margin-top: 2px; }
+@media (max-width: 560px) {
+  [data-theme="terminal"] .rows > li,
+  [data-theme="terminal"] .rows > li:last-child { grid-template-columns: minmax(0, 1fr); }
+}
+[data-theme="terminal"] footer { font-size: inherit; }
+[data-theme="terminal"] footer::after {
+  content: "$";
+  flex-basis: 100%;
+  margin-top: 14px;
+  color: var(--prompt);
+  font-weight: 700;
+  /* the block cursor, drawn two characters in, right after the prompt */
+  background: linear-gradient(var(--prompt), var(--prompt)) 2ch 50% / 1ch 1.15em no-repeat;
+  animation: blink 1.1s steps(1) infinite;
+}
+@keyframes blink { 50% { background-size: 0 0; } }
+@media (prefers-reduced-motion: reduce) { [data-theme="terminal"] footer::after { animation: none; } }

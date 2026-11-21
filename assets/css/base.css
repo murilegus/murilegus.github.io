@@ -1,0 +1,154 @@
+/* ── Tokens ─────────────────────────────────────────────────────────────
+   Every colour goes through a token. A theme is a block that redefines the
+   tokens (and restyles the same markup); a colour mode is a second block
+   on top of it. Markup and content never change between themes. */
+:root {
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --mono: ui-monospace, "JetBrains Mono", "Cascadia Code", "SF Mono", Menlo, Consolas, "DejaVu Sans Mono", monospace;
+
+  --page: #fbfbfd;      /* behind everything */
+  --bg: #fbfbfd;        /* content surface */
+  --fg: #0b0c10;
+  --muted: #636873;
+  --rule: #d9dbe2;
+  --accent: #2743d6;
+  --comment: var(--muted);
+  color-scheme: light;
+}
+/* Dark mode uses the Dracula palette (draculatheme.com) in every theme.
+   --muted is Foreground toned down toward Background: Dracula's own Comment
+   colour (#6272a4) is too low-contrast for running text, so it is kept for
+   decoration only (--comment). */
+:root[data-mode="dark"] {
+  --page: #282a36;      /* Background */
+  --bg: #282a36;
+  --fg: #f8f8f2;        /* Foreground */
+  --muted: #b6b9cc;
+  --comment: #6272a4;   /* Comment */
+  --rule: #44475a;      /* Current Line */
+  --accent: #bd93f9;    /* Purple */
+  color-scheme: dark;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--page);
+  color: var(--fg);
+  font: 17px/1.6 var(--sans);
+  padding:
+    calc(28px + env(safe-area-inset-top))
+    max(22px, env(safe-area-inset-right))
+    calc(56px + env(safe-area-inset-bottom))
+    max(22px, env(safe-area-inset-left));
+}
+
+.page { max-width: 46rem; margin: 0 auto; }
+
+/* Every link, in every theme, carries a faint underline in its own colour;
+   hover brings it to full strength. */
+a {
+  color: inherit;
+  text-decoration-line: underline;
+  text-decoration-color: var(--rule);
+  text-decoration-color: color-mix(in srgb, currentColor 35%, transparent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: .22em;
+}
+a:hover { color: var(--accent); text-decoration-color: currentColor; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+
+/* ── Top bar: identity + switchers ── */
+.top {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px 24px;
+  font-size: 15px;
+  color: var(--muted);
+}
+.controls { display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.group { display: flex; gap: 10px; }
+.group button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+.group button:hover { color: var(--accent); }
+.group button[aria-pressed="true"] {
+  color: var(--fg);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: .3em;
+}
+
+/* ── Intro ── */
+.intro { padding: clamp(56px, 12vw, 112px) 0 clamp(48px, 9vw, 84px); }
+h1 {
+  margin: 0 0 .5em;
+  font-size: clamp(2.1rem, 7vw, 3.7rem);
+  line-height: 1.05;
+  letter-spacing: -.035em;
+  font-weight: 700;
+  text-wrap: balance;
+}
+.lead { margin: 0 0 1.6em; max-width: 36rem; font-size: 1.1rem; color: var(--muted); }
+.cta { margin: 0; display: flex; flex-wrap: wrap; gap: 8px 22px; font-weight: 600; }
+.cta a:first-child { color: var(--accent); }
+
+/* ── Sections ── */
+section { padding-bottom: clamp(40px, 7vw, 64px); }
+h2 {
+  margin: 0 0 10px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.rows { list-style: none; margin: 0; padding: 0; }
+.rows > li {
+  display: grid;
+  grid-template-columns: 9.5rem minmax(0, 1fr);
+  gap: 2px 20px;
+  padding: 14px 0;
+  border-top: 1px solid var(--rule);
+}
+.rows > li:last-child { border-bottom: 1px solid var(--rule); }
+.when { color: var(--muted); font-size: 15px; font-variant-numeric: tabular-nums; padding-top: .12em; }
+.what { min-width: 0; }
+.what strong { font-weight: 600; }
+.what p, .what ul { margin: 4px 0 0; color: var(--muted); font-size: 15.5px; }
+.what ul { padding-left: 1.1em; }
+.what li + li { margin-top: 4px; }
+@media (max-width: 560px) { .rows > li { grid-template-columns: minmax(0, 1fr); } }
+
+footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 24px; font-size: 15px; color: var(--muted); }
+footer nav { display: flex; flex-wrap: wrap; gap: 4px 18px; }
+
+/* ── Touch screens ─────────────────────────────────────────────────────
+   Switchers and contact links grow to a 44px-tall tap area. The extra height
+   is padding inside each control, so the text itself does not move apart. */
+@media (pointer: coarse) {
+  .controls { row-gap: 0; column-gap: 25px; }
+  .group { gap: 2px; }
+  .group button { min-height: 44px; padding: 0 7px; }
+  /* pull each group back by its first button's padding so a group that
+     wraps to a new line still starts flush with the page's left edge */
+  .group button:first-child { margin-left: -7px; }
+  .cta, footer nav { row-gap: 0; }
+  .cta a, footer a { display: inline-flex; align-items: center; min-height: 44px; }
+  .what strong a { display: inline-block; padding-block: 8px; margin-block: -8px; }
+}
+
+@media print {
+  body { font-size: 11pt; padding: 0; }
+  .controls { display: none; }
+  .intro { padding: 24pt 0; }
+}
