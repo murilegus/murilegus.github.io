@@ -139,3 +139,12 @@
 }
 @keyframes blink { 50% { background-size: 0 0; } }
 @media (prefers-reduced-motion: reduce) { [data-theme="terminal"] footer::after { animation: none; } }
+
+/* Touch screens: the brackets already separate the options, so the buttons
+   need less side padding here, which keeps the switchers to two rows on a phone. */
+@media (pointer: coarse) {
+  [data-theme="terminal"] .controls { gap: 0 2ch; }
+  [data-theme="terminal"] .group { gap: 2px; }
+  [data-theme="terminal"] .group button { padding: 0 3px; }
+  [data-theme="terminal"] .group button:first-child { margin-left: -3px; }
+}

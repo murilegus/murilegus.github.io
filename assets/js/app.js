@@ -131,7 +131,8 @@
     }));
 
     var footer = el('footer', null,
-      el('span', null, t(c.location) + ' · ', el('a', { href: 'mailto:' + CONTACT.email, text: CONTACT.email })),
+      el('span', { 'class': 'where' }, t(c.location), el('span', { 'class': 'sep', text: ' · ' }),
+        el('a', { href: 'mailto:' + CONTACT.email, text: CONTACT.email })),
       el('nav', null,
         el('a', { href: CONTACT.linkedin, text: 'LinkedIn' }),
         el('a', { href: CONTACT.github, text: 'GitHub' }),

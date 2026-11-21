@@ -104,6 +104,7 @@ h1 {
 .cta { margin: 0; display: flex; flex-wrap: wrap; gap: 8px 40px; font-weight: 600; }
 .cta .links { display: flex; flex-wrap: wrap; gap: 8px 18px; }
 .cta > a { color: var(--accent); }
+footer .sep { white-space: pre; }
 
 /* ── Sections ── */
 section { padding-bottom: clamp(40px, 7vw, 64px); }
@@ -148,6 +149,17 @@ footer nav { display: flex; flex-wrap: wrap; gap: 4px 18px; }
   .cta, .cta .links, footer nav { row-gap: 0; }
   .cta a, footer a { display: inline-flex; align-items: center; min-height: 44px; }
   .what strong a { display: inline-block; padding-block: 8px; margin-block: -8px; }
+}
+
+/* Narrow screens: keep the link groups readable as groups. The CV download
+   gets its own line; below it the e-mail address takes a full line so that
+   LinkedIn and GitHub stay together instead of one of them wrapping alone. */
+@media (max-width: 560px) {
+  .cta { flex-direction: column; row-gap: 10px; }
+  .cta .links a:first-child { flex-basis: 100%; }
+  /* footer: city and e-mail stack, so the "·" between them is not left dangling */
+  footer .where { display: flex; flex-direction: column; align-items: flex-start; }
+  footer .sep { display: none; }
 }
 
 @media print {
