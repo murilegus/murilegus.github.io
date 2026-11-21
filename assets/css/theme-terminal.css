@@ -91,8 +91,8 @@
 [data-theme="terminal"] h2::before { content: "$ " attr(data-cmd); }
 [data-theme="terminal"] h2.dir::before { --arg: var(--dir); }
 
-[data-theme="terminal"] .controls { color: var(--muted); gap: 2px 14px; }
-[data-theme="terminal"] .group { gap: 6px; }
+[data-theme="terminal"] .controls { color: var(--muted); gap: 2px 3ch; }
+[data-theme="terminal"] .group { gap: 1ch; }
 [data-theme="terminal"] .group button::before { content: "["; }
 [data-theme="terminal"] .group button::after { content: "]"; }
 [data-theme="terminal"] .group button[aria-pressed="true"] { color: var(--cmd); text-decoration: none; font-weight: 700; }

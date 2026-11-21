@@ -7,7 +7,7 @@ var THEMES = ['minimal', 'terminal'];
   var d = document.documentElement;
   function get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
   var lang = get('site.lang');
-  if (lang !== 'en' && lang !== 'vi') lang = /^vi\b/i.test(navigator.language || '') ? 'vi' : 'en';
+  if (lang !== 'en' && lang !== 'vi') lang = 'en';
   var theme = get('site.theme');
   if (THEMES.indexOf(theme) < 0) theme = THEMES[0];
   var pref = get('site.mode');

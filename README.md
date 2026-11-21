@@ -7,7 +7,7 @@ Người xem tự chọn ba thứ ở đầu trang, lựa chọn được nhớ 
 
 | Tuỳ chọn | Giá trị | Mặc định |
 |---|---|---|
-| Ngôn ngữ | `EN`, `VI` | theo ngôn ngữ trình duyệt |
+| Ngôn ngữ | `EN`, `VI` | `EN` |
 | Giao diện (theme) | `Minimal`, `Terminal` | `Minimal` |
 | Chế độ màu | Tự động, Sáng, Tối | Tự động (theo thiết bị) |
 
@@ -21,6 +21,7 @@ Người xem tự chọn ba thứ ở đầu trang, lựa chọn được nhớ 
 | [`assets/js/boot.js`](assets/js/boot.js) | Chạy trước khi vẽ: áp ngôn ngữ, theme, chế độ màu đã lưu; chứa danh sách `THEMES` |
 | [`assets/css/base.css`](assets/css/base.css) | Token màu, bố cục, theme Minimal, màn hình cảm ứng, in ấn |
 | [`assets/css/theme-terminal.css`](assets/css/theme-terminal.css) | Theme Terminal |
+| `assets/Trung-Pham-Thanh-CV.pdf` | File CV để tải về; thay file này khi cập nhật CV |
 
 ## Sửa nội dung
 

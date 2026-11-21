@@ -13,7 +13,8 @@
     auto: { en: 'Auto', vi: 'Tự động' },
     light: { en: 'Light', vi: 'Sáng' },
     dark: { en: 'Dark', vi: 'Tối' },
-    source: { en: 'Site source', vi: 'Mã nguồn trang' }
+    source: { en: 'Site source', vi: 'Mã nguồn trang' },
+    cv: { en: 'Download CV (PDF)', vi: 'Tải CV (PDF)' }
   };
   var THEME_LABELS = { minimal: 'Minimal', terminal: 'Terminal' };
 
@@ -101,9 +102,11 @@
       el('h1', { text: t(c.headline) }),
       el('p', { 'class': 'lead', text: t(c.lead) }),
       el('p', { 'class': 'cta' },
-        el('a', { href: 'mailto:' + CONTACT.email, text: CONTACT.email }),
-        el('a', { href: CONTACT.linkedin, text: 'LinkedIn' }),
-        el('a', { href: CONTACT.github, text: 'GitHub' })));
+        el('a', { href: CONTACT.cv, text: t(UI.cv) }),
+        el('span', { 'class': 'links' },
+          el('a', { href: 'mailto:' + CONTACT.email, text: CONTACT.email }),
+          el('a', { href: CONTACT.linkedin, text: 'LinkedIn' }),
+          el('a', { href: CONTACT.github, text: 'GitHub' }))));
 
     var experience = section('exp', 'cat experience.md', t(UI.experience), c.experience.map(function (x) {
       var ul = el('ul');

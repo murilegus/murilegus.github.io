@@ -5,7 +5,8 @@
 var CONTACT = {
   email: 'contacts.trungpt@gmail.com',
   linkedin: 'https://www.linkedin.com/in/trungit',
-  github: 'https://github.com/murilegus'
+  github: 'https://github.com/murilegus',
+  cv: 'assets/Trung-Pham-Thanh-CV.pdf'   // the PDF is in English
 };
 
 var CONTENT = {

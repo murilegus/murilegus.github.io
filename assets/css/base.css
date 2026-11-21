@@ -70,8 +70,10 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outlin
   font-size: 15px;
   color: var(--muted);
 }
-.controls { display: flex; flex-wrap: wrap; gap: 4px 18px; }
-.group { display: flex; gap: 10px; }
+/* Proximity: options of one switcher sit close together, the switchers
+   themselves sit clearly apart. Same idea for the links under the intro. */
+.controls { display: flex; flex-wrap: wrap; gap: 4px 30px; }
+.group { display: flex; gap: 9px; }
 .group button {
   font: inherit;
   color: inherit;
@@ -99,8 +101,9 @@ h1 {
   text-wrap: balance;
 }
 .lead { margin: 0 0 1.6em; max-width: 36rem; font-size: 1.1rem; color: var(--muted); }
-.cta { margin: 0; display: flex; flex-wrap: wrap; gap: 8px 22px; font-weight: 600; }
-.cta a:first-child { color: var(--accent); }
+.cta { margin: 0; display: flex; flex-wrap: wrap; gap: 8px 40px; font-weight: 600; }
+.cta .links { display: flex; flex-wrap: wrap; gap: 8px 18px; }
+.cta > a { color: var(--accent); }
 
 /* ── Sections ── */
 section { padding-bottom: clamp(40px, 7vw, 64px); }
@@ -136,13 +139,13 @@ footer nav { display: flex; flex-wrap: wrap; gap: 4px 18px; }
    Switchers and contact links grow to a 44px-tall tap area. The extra height
    is padding inside each control, so the text itself does not move apart. */
 @media (pointer: coarse) {
-  .controls { row-gap: 0; column-gap: 25px; }
+  .controls { row-gap: 0; column-gap: 40px; }
   .group { gap: 2px; }
   .group button { min-height: 44px; padding: 0 7px; }
   /* pull each group back by its first button's padding so a group that
      wraps to a new line still starts flush with the page's left edge */
   .group button:first-child { margin-left: -7px; }
-  .cta, footer nav { row-gap: 0; }
+  .cta, .cta .links, footer nav { row-gap: 0; }
   .cta a, footer a { display: inline-flex; align-items: center; min-height: 44px; }
   .what strong a { display: inline-block; padding-block: 8px; margin-block: -8px; }
 }
